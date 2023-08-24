@@ -1,0 +1,12 @@
+
+grammar;
+
+use crate::ast::Expr;
+
+pub Ast: Expr = {
+    Nr => Expr::Num(<>),
+}
+
+Nr: u64 = {
+    r"[0-9]+" => <>.parse().unwrap()
+}
