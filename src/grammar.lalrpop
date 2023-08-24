@@ -3,18 +3,17 @@ grammar;
 
 use crate::ast::Ast;
 use crate::ast::Expr;
-use crate::ast::Expression;
 
 
 pub Root: Ast = {
     <mut es:(<Expr> r"[\n\r]"+)+> <e:Expr> r"[\n\r]"* => {
         es.push(e);
-        Ast { expressions: es },
+        Ast { expressions: es }
     }
 }
 
-pub Expr: Expression = {
-    Nr => Ast { expressions: vec![Expr::Num(<>)] },
+pub Expr: Expr = {
+    Nr => Expr::Num(<>),
 }
 
 Nr: u64 = {
