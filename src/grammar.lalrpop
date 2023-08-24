@@ -12,7 +12,16 @@ pub Root: Ast = {
     }
 }
 
-pub Expr: Expr = {
+Expr: Expr = {
+    BinaryExpr => <>,
+}
+
+BinaryExpr: Expr = {
+    <l:BinaryExpr> "+" r"[\n\r]"* <r:NullaryExpr> => Expr::Sum(Box::new([l, r])),
+    NullaryExpr,
+}
+
+NullaryExpr: Expr = {
     Nr => Expr::Num(<>),
 }
 
