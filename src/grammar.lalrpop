@@ -30,6 +30,11 @@ BinaryExpr: Expr = {
 
 DotExpr: Expr = {
     <e:DotExpr> "." <v:Var> => Expr::Dot(Box::new(e), v),
+    FunctionExpr,
+}
+
+FunctionExpr: Expr = {
+    <t: FunctionExpr> "\\" <f: Expr> NL => Expr::Function(Box::new([t, f])),
     NullaryExpr,
 }
 
