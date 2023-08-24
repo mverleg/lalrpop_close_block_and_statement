@@ -20,7 +20,12 @@ pub Root: Ast = {
 }
 
 Expr: Expr = {
-    BinaryExpr => <>,
+    FunctionExpr => <>,
+}
+
+FunctionExpr: Expr = {
+    <t: BinaryExpr> "\\" <f: Expr> NL => Expr::Function(Box::new([t, f])),
+    BinaryExpr,
 }
 
 BinaryExpr: Expr = {
@@ -30,11 +35,6 @@ BinaryExpr: Expr = {
 
 DotExpr: Expr = {
     <e:DotExpr> "." <v:Var> => Expr::Dot(Box::new(e), v),
-    FunctionExpr,
-}
-
-FunctionExpr: Expr = {
-    <t: FunctionExpr> "\\" <f: Expr> NL => Expr::Function(Box::new([t, f])),
     NullaryExpr,
 }
 
