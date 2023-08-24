@@ -1,6 +1,11 @@
 
 #[derive(Debug)]
+pub struct Ast {
+    pub expressions: Vec<Expr>,
+}
+
+#[derive(Debug)]
 pub enum Expr {
-    Nr(u64),
+    Num(u64),
     Sum(Box<[Expr; 2]>),
 }

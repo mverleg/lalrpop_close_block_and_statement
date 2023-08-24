@@ -2,9 +2,10 @@
 grammar;
 
 use crate::ast::Expr;
+use crate::ast::Ast;
 
-pub Ast: Expr = {
-    Nr => Expr::Num(<>),
+pub Root: Ast = {
+    Nr => Ast { expressions: vec![Expr::Num(<>)] },
 }
 
 Nr: u64 = {
