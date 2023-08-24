@@ -24,13 +24,19 @@ Expr: Expr = {
 }
 
 BinaryExpr: Expr = {
-    <l:BinaryExpr> "+" NL* <r:NullaryExpr> => Expr::Sum(Box::new([l, r])),
+    <l:BinaryExpr> "+" NL* <r:DotExpr> => Expr::Sum(Box::new([l, r])),
+    DotExpr,
+}
+
+DotExpr: Expr = {
+    <e:DotExpr> "." <v:Var> => Expr::Dot(Box::new(e), v),
     NullaryExpr,
 }
 
 NullaryExpr: Expr = {
     Nr => Expr::Num(<>),
     Var => Expr::Var(<>),
+    "(" <e:Expr> ")" => e,
 }
 
 Nr: u64 = {

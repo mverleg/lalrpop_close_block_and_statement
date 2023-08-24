@@ -8,5 +8,6 @@ pub struct Ast {
 pub enum Expr {
     Num(u64),
     Var(String),
+    Dot(Box<Expr>, String),
     Sum(Box<[Expr; 2]>),
 }
