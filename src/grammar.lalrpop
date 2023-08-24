@@ -1,12 +1,19 @@
 
-grammar;
-
 use crate::ast::Ast;
 use crate::ast::Expr;
 
+grammar;
+
+match {
+    r"(\n|\r)+" => NL,
+} else {
+    r"[ \t]+" => { },
+} else {
+    _
+}
 
 pub Root: Ast = {
-    <mut es:(<Expr> r"[\n\r]"+)+> <e:Expr> r"[\n\r]"* => {
+    <mut es:(<Expr> NL+)+> <e:Expr> NL* => {
         es.push(e);
         Ast { expressions: es }
     }
@@ -17,7 +24,7 @@ Expr: Expr = {
 }
 
 BinaryExpr: Expr = {
-    <l:BinaryExpr> "+" r"[\n\r]"* <r:NullaryExpr> => Expr::Sum(Box::new([l, r])),
+    <l:BinaryExpr> "+" NL* <r:NullaryExpr> => Expr::Sum(Box::new([l, r])),
     NullaryExpr,
 }
 
