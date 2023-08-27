@@ -75,9 +75,13 @@ print(result)
   * There is also needs to be a similar special case for `\n.`, but that is at expression instead of statement level.
 * Allow newline-"." outside closures, but only "." inside. Two ways, neither of which work:
   * Match two tokens, `Newline* "."`. Does not work because of ambiguity of whether the newline ends the statement or not (max lookahead is 1)
-  * Split into token `"."` and `\n+.`, and only allow the former in closures. Does not work because `\n+.` will consume the newline.
+  * Split into token `"."` and `\n+.`, and only allow the former in closures. Does not work because `\n+.` will consume the newline, and `\`closure does not know what to do.
+
+** Todo: why last one above does not work? **
 
 ## Solution
+
+** Todo: does not actually solve it? **
 
 There are two main parts of the solution
 
