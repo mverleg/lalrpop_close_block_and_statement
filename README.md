@@ -35,5 +35,37 @@ A simplified language, based on [Steel](https://github.com/mverleg/steel), where
 
 ## Problems
 
+The problem is that this code is ambiguous:
+
+```
+offset = 1
+result = list
+    .map \ it - offset
+    .map \ it.abs
+print(result)
+```
+
+It seems obvious with indenting that the intended meaning is
+
+```
+offset = 1
+result = list
+    .map(\ it - offset)
+    .map(\ it.abs)
+print(result)
+```
+
+but indentation does not affect syntax (only linebreaks), so it could also be
+
+```
+offset = 1
+result = list
+    .map(\ it - offset
+        .map(\ it.abs))
+print(result)
+```
+
+## Non-solutions
 
 ## Solution
+
