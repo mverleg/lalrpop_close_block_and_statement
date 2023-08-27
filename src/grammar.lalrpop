@@ -17,7 +17,7 @@ match {
 }
 
 pub Root: Ast = {
-    NL* <mut es:(<Expr> NL+)+> <e:Expr> NL* => {
+    NL* <mut es:(<Expr> NL+)*> <e:Expr> NL* => {
         es.push(e);
         Ast { expressions: es }
     }
