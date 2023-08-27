@@ -29,7 +29,7 @@ AnyDot: () = {
 }
 
 Expr<Dot>: Expr = {
-    FunctionExpr<Dot> => <>,
+    FunctionExpr<Dot>,
 }
 
 FunctionExpr<Dot>: Expr = {

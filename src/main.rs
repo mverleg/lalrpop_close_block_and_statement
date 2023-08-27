@@ -17,7 +17,7 @@ fn main() {
     println!("code from {}: {}", &pth.to_string_lossy(), &code); //TODO @mark: TEMPORARY! REMOVE THIS!
     let parser = gen_parser::RootParser::new();
     match parser.parse(&code) {
-        Ok(ast) => println!("ast: {}", serde_json::to_string_pretty(&ast).unwrap()),
+        Ok(ast) => println!("ast:\n{}", serde_json::to_string_pretty(&ast).unwrap()),
         Err(err) => eprintln!("{}", build_error(err, pth.to_str().unwrap(), &code).0),
     }
 }
