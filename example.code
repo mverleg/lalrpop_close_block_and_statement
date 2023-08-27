@@ -8,3 +8,6 @@ a \ 1 + 2
 
 (b.c \ d) \ e+f
 
+list
+    .map \ it + offset
+    .map \ it.abs

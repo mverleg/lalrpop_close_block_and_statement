@@ -16,11 +16,16 @@ match {
     _
 }
 
+
 pub Root: Ast = {
     NL* <mut es:(<Expr> NL+)*> <e:Expr> NL* => {
         es.push(e);
         Ast { expressions: es }
     }
+}
+
+AnyDot: () = {
+    JustDot, NLDot,
 }
 
 Expr: Expr = {
@@ -38,7 +43,7 @@ BinaryExpr: Expr = {
 }
 
 DotExpr: Expr = {
-    <e:DotExpr> JustDot <v:Var> => Expr::Dot(Box::new(e), v),
+    <e:DotExpr> AnyDot <v:Var> => Expr::Dot(Box::new(e), v),
     NullaryExpr,
 }
 
