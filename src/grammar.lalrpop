@@ -5,7 +5,11 @@ use crate::ast::Expr;
 grammar;
 
 match {
-    r"(\r\n|\n|\r)" => NL,
+    r"(\r\n|\n|\r)\s*\." => NLDot,
+} else {
+    r"\." => JustDot,
+} else {
+    r"(\r\n|\n|\r)+" => NL,
 } else {
     r"[ \t]+" => { },
 } else {
@@ -34,7 +38,7 @@ BinaryExpr: Expr = {
 }
 
 DotExpr: Expr = {
-    <e:DotExpr> "." <v:Var> => Expr::Dot(Box::new(e), v),
+    <e:DotExpr> JustDot <v:Var> => Expr::Dot(Box::new(e), v),
     NullaryExpr,
 }
 
