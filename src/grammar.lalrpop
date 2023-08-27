@@ -18,7 +18,7 @@ match {
 
 
 pub Root: Ast = {
-    NL* <mut es:(<Expr> NL+)*> <e:Expr> NL* => {
+    NL* <mut es:(<Expr<AnyDot>> NL+)*> <e:Expr<AnyDot>> NL* => {
         es.push(e);
         Ast { expressions: es }
     }
@@ -28,29 +28,29 @@ AnyDot: () = {
     JustDot, NLDot,
 }
 
-Expr: Expr = {
-    FunctionExpr => <>,
+Expr<Dot>: Expr = {
+    FunctionExpr<Dot> => <>,
 }
 
-FunctionExpr: Expr = {
-    <t: BinaryExpr> "\\" <f: Expr> => Expr::Function(Box::new([t, f])),
-    BinaryExpr,
+FunctionExpr<Dot>: Expr = {
+    <t: BinaryExpr<Dot>> "\\" <f: Expr<JustDot>> => Expr::Function(Box::new([t, f])),
+    BinaryExpr<Dot>,
 }
 
-BinaryExpr: Expr = {
-    <l:BinaryExpr> "+" NL* <r:DotExpr> => Expr::Sum(Box::new([l, r])),
-    DotExpr,
+BinaryExpr<Dot>: Expr = {
+    <l:BinaryExpr<Dot>> "+" NL* <r:DotExpr<Dot>> => Expr::Sum(Box::new([l, r])),
+    DotExpr<Dot>,
 }
 
-DotExpr: Expr = {
-    <e:DotExpr> AnyDot <v:Var> => Expr::Dot(Box::new(e), v),
-    NullaryExpr,
+DotExpr<Dot>: Expr = {
+    <e:DotExpr<Dot>> Dot <v:Var> => Expr::Dot(Box::new(e), v),
+    NullaryExpr<Dot>,
 }
 
-NullaryExpr: Expr = {
+NullaryExpr<Dot>: Expr = {
     Nr => Expr::Num(<>),
     Var => Expr::Var(<>),
-    "(" <e:Expr> ")" => e,
+    "(" <e:Expr<Dot>> ")" => e,
 }
 
 Nr: u64 = {
