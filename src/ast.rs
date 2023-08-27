@@ -1,10 +1,12 @@
 
-#[derive(Debug)]
+use ::serde::Serialize;
+
+#[derive(Debug, Serialize)]
 pub struct Ast {
     pub expressions: Vec<Expr>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub enum Expr {
     Num(u64),
     Var(String),
