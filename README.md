@@ -67,12 +67,15 @@ print(result)
 
 ## Non-solution
 
-* Consuming the trailing newline to terminate the `\` closure. This comes in several variations but it does not work, because
+* Consuming the trailing newline to terminate the `\` closure. This comes in several variations, but it does not work, because
   * There is no newline left to terminate the statement. And there is no way to look at the newline but not consume it.
   * Not all `\` closures are terminated by a newline, i.e. it might be inside `(...)`.
 * Making special versions of statements that can be terminated either by newlines/`;` or by closures that use the same
   * This makes the grammar much more complicated.
   * There is also needs to be a similar special case for `\n.`, but that is at expression instead of statement level.
+* Allow newline-"." outside closures, but only "." inside. Two ways, neither of which work:
+  * Match two tokens, `Newline* "."`. Does not work because of ambiguity of whether the newline ends the statement or not (max lookahead is 1)
+  * Split into token `"."` and `\n+.`, and only allow the former in closures. Does not work because `\n+.` will consume the newline.
 
 ## Solution
 
