@@ -24,11 +24,6 @@ pub Root: Ast = {
 }
 
 Expr: Expr = {
-    NLDotExpr,
-}
-
-NLDotExpr: Expr = {
-    <e:NLDotExpr> NLDot <v:Var> => Expr::Dot{ subject: Box::new(e), attr: v },
     FunctionExpr,
 }
 
