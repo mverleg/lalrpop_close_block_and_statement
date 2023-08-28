@@ -65,6 +65,10 @@ result = list
 print(result)
 ```
 
+## Ambiguity
+
+It is not possible to just use  a closure that is finished when the expression is. If there is no terminator, it is ambiguous, just like 
+
 ## Non-solution
 
 * Consuming the trailing newline to terminate the `\` closure. This comes in several variations, but it does not work, because
@@ -73,8 +77,8 @@ print(result)
 * Making special versions of statements that can be terminated either by newlines/`;` or by closures that use the same
   * This makes the grammar much more complicated.
   * There is also needs to be a similar special case for `\n.`, but that is at expression instead of statement level.
-* Allow newline-"." outside closures, but only "." inside. Two ways, neither of which work:
-  * Match a combined single token, `Newline* "."`. Does not work because of ambiguity of whether the newline ends the statement or the closure (max lookahead is 1).
-  * Split into token `"."` and `\n+.`, and only allow the former in closures. Does not work because `\n+.` will consume the newline, and `\`closure does not know what to do.
-  Note that `.` must be 'higher' than closure in the parser tree to be able to do `a.b\f \n d`.
+* Allow newline-"." outside closures, but only "." inside.
+  Ambiguous because of e.g. `a\b\c`, unless closure body is subtype of closure, which is very limiting (esp. since closure must be lower than dot-expr in the parse tree).
+  * Split into token `.` and `\n+.`, and only allow the former in closures. Does not work because `\n+.` will consume the newline, and `\` closure does not know what to do.
+  * Match a combined single token, `Newline* "."`. 
 
