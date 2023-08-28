@@ -32,7 +32,7 @@ Expr<Dot>: Expr = {
 }
 
 FunctionExpr<Dot>: Expr = {
-    <t: FunctionExpr<Dot>> "\\" <f: BinaryExpr<JustDot>> "/" => Expr::Function(Box::new([t, f])),
+    <t: FunctionExpr<Dot>> "\\" <f: BinaryExpr<JustDot>> => Expr::Function(Box::new([t, f])),
     BinaryExpr<Dot>,
 }
 

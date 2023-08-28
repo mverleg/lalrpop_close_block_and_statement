@@ -22,3 +22,6 @@ list
     .map \ it + offset
     .map \ it.abs
 
+a . b \ c . d
+    . e . f
+    . g
