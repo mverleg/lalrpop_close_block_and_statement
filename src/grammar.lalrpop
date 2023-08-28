@@ -32,17 +32,17 @@ Expr<Dot>: Expr = {
 }
 
 FunctionExpr<Dot>: Expr = {
-    <t: FunctionExpr<Dot>> "\\" <f: BinaryExpr<JustDot>> => Expr::Function(Box::new([t, f])),
+    <t: FunctionExpr<Dot>> "\\" <f: BinaryExpr<JustDot>> => Expr::Function{ subject: Box::new(t), func: Box::new(f) },
     BinaryExpr<Dot>,
 }
 
 BinaryExpr<Dot>: Expr = {
-    <l:BinaryExpr<Dot>> "+" NL* <r:DotExpr<Dot>> => Expr::Sum(Box::new([l, r])),
+    <l:BinaryExpr<Dot>> "+" NL* <r:DotExpr<Dot>> => Expr::Sum{ left: Box::new(l), right: Box::new(r) },
     DotExpr<Dot>,
 }
 
 DotExpr<Dot>: Expr = {
-    <e:DotExpr<Dot>> Dot <v:Var> => Expr::Dot(Box::new(e), v),
+    <e:DotExpr<Dot>> Dot <v:Var> => Expr::Dot{ subject: Box::new(e), attr: v },
     NullaryExpr<Dot>,
 }
 

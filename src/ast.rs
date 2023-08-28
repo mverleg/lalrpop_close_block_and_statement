@@ -10,7 +10,7 @@ pub struct Ast {
 pub enum Expr {
     Num(u64),
     Var(String),
-    Dot(Box<Expr>, String),
-    Function(Box<[Expr; 2]>),
-    Sum(Box<[Expr; 2]>),
+    Dot { subject: Box<Expr>, attr: String },
+    Function { subject: Box<Expr>, func: Box<Expr>, },
+    Sum { left: Box<Expr>, right: Box<Expr> },
 }
