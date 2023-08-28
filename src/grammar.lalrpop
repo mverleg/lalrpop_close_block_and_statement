@@ -29,21 +29,21 @@ AnyDot: () = {
 }
 
 Expr<Dot>: Expr = {
-    FunctionExpr<Dot>,
-}
-
-FunctionExpr<Dot>: Expr = {
-    <t: BinaryExpr<Dot>> "\\" <f: Expr<JustDot>> => Expr::Function(Box::new([t, f])),
     BinaryExpr<Dot>,
 }
 
 BinaryExpr<Dot>: Expr = {
-    <l:BinaryExpr<Dot>> "+" NL* <r:DotExpr<Dot>> => Expr::Sum(Box::new([l, r])),
+    <l:BinaryExpr<Dot>> "+" <r:DotExpr<Dot>> => Expr::Sum(Box::new([l, r])),
     DotExpr<Dot>,
 }
 
 DotExpr<Dot>: Expr = {
     <e:DotExpr<Dot>> Dot <v:Var> => Expr::Dot(Box::new(e), v),
+    FunctionExpr<Dot>,
+}
+
+FunctionExpr<Dot>: Expr = {
+    <t: NullaryExpr<Dot>> "\\" <f: Expr<JustDot>> => Expr::Function(Box::new([t, f])),
     NullaryExpr<Dot>,
 }
 
