@@ -43,7 +43,7 @@ DotExpr<Dot>: Expr = {
 }
 
 FunctionExpr<Dot>: Expr = {
-    <t: NullaryExpr<Dot>> "\\" <f: Expr<JustDot>> => Expr::Function(Box::new([t, f])),
+    <t: FunctionExpr<Dot>> "\\" <f: NullaryExpr<JustDot>> => Expr::Function(Box::new([t, f])),
     NullaryExpr<Dot>,
 }
 
