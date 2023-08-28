@@ -17,3 +17,5 @@ a\b\c\d
 list
     .map \ it + offset
     .map \ it.abs
+
+1 + 2 + 3
