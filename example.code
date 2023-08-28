@@ -14,6 +14,10 @@ a + b \ c + d
 
 a . b \ c . d
 
+a . b \ c . d
+    . e . f
+    . g \ h
+
 (list
     .map \ it + offset)
     .map \ it.abs
@@ -22,6 +26,3 @@ list
     .map \ it + offset
     .map \ it.abs
 
-a . b \ c . d
-    . e . f
-    . g

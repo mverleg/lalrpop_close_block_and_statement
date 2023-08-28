@@ -37,7 +37,7 @@ FunctionExpr<Dot>: Expr = {
 }
 
 BinaryExpr<Dot>: Expr = {
-    <l:BinaryExpr<Dot>> "+" <r:DotExpr<Dot>> => Expr::Sum(Box::new([l, r])),
+    <l:BinaryExpr<Dot>> "+" NL* <r:DotExpr<Dot>> => Expr::Sum(Box::new([l, r])),
     DotExpr<Dot>,
 }
 
