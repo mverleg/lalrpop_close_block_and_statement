@@ -10,6 +10,10 @@ a \ 1 + 2
 
 a\b\c\d
 
+a + b \ c + d
+
+a . b \ c . d
+
 (list
     .map \ it + offset)
     .map \ it.abs
@@ -18,4 +22,3 @@ list
     .map \ it + offset
     .map \ it.abs
 
-1 + 2 + 3

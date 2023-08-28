@@ -16,7 +16,6 @@ match {
     _
 }
 
-
 pub Root: Ast = {
     NL* <mut es:(<Expr<AnyDot>> NL+)*> <e:Expr<AnyDot>> NL* => {
         es.push(e);
@@ -29,6 +28,11 @@ AnyDot: () = {
 }
 
 Expr<Dot>: Expr = {
+    FunctionExpr<Dot>,
+}
+
+FunctionExpr<Dot>: Expr = {
+    <t: FunctionExpr<Dot>> "\\" <f: BinaryExpr<JustDot>> "/" => Expr::Function(Box::new([t, f])),
     BinaryExpr<Dot>,
 }
 
@@ -39,11 +43,6 @@ BinaryExpr<Dot>: Expr = {
 
 DotExpr<Dot>: Expr = {
     <e:DotExpr<Dot>> Dot <v:Var> => Expr::Dot(Box::new(e), v),
-    FunctionExpr<Dot>,
-}
-
-FunctionExpr<Dot>: Expr = {
-    <t: FunctionExpr<Dot>> "\\" <f: BinaryExpr<JustDot>> "/" => Expr::Function(Box::new([t, f])),
     NullaryExpr<Dot>,
 }
 
