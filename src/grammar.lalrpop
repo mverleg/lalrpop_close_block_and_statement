@@ -24,7 +24,7 @@ pub Root: Ast = {
 }
 
 Expr: Expr = {
-    FunctionExpr,
+    NLDotExpr,
 }
 
 NLDotExpr: Expr = {

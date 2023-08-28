@@ -46,7 +46,7 @@ pub fn build_error<T, E: fmt::Display>(
             expected,
         } => {
             let (line, col) = source_line_col(code, start);
-            let found = &code[start..end];
+            let found = code[start..end].replace("\n", "\\n");
             (
                 format!(
                     "Did not expect '{found}' in {src_file}:{}:{}\n{}{}",
