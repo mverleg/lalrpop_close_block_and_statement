@@ -14,7 +14,6 @@ lalrpop_mod!(#[allow(clippy::all)] gen_parser, "/grammar.rs");
 fn main() {
     let pth = PathBuf::from(args().nth(1).expect("provide input path as arg")).canonicalize().unwrap();
     let code = fs::read_to_string(&pth).unwrap();
-    println!("code from {}: {}", &pth.to_string_lossy(), &code); //TODO @mark: TEMPORARY! REMOVE THIS!
     let parser = gen_parser::RootParser::new();
     match parser.parse(&code) {
         Ok(ast) => println!("ast:\n{}", serde_json::to_string_pretty(&ast).unwrap()),
