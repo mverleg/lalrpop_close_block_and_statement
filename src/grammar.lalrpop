@@ -24,16 +24,16 @@ pub Root: Ast = {
 }
 
 Expr: Expr = {
-    BinaryExpr,
-}
-
-BinaryExpr: Expr = {
-    <l:BinaryExpr> "+" NL* <r:FunctionExpr> => Expr::Sum{ left: Box::new(l), right: Box::new(r) },
     FunctionExpr,
 }
 
 FunctionExpr: Expr = {
-    <t: FunctionExpr> "\\" <f: JustDotExpr> => Expr::Function{ subject: Box::new(t), func: Box::new(f) },
+    <t: BinaryExpr> "\\" <f: FunctionExpr> => Expr::Function{ subject: Box::new(t), func: Box::new(f) },
+    BinaryExpr,
+}
+
+BinaryExpr: Expr = {
+    <l:BinaryExpr> "+" NL* <r:JustDotExpr> => Expr::Sum{ left: Box::new(l), right: Box::new(r) },
     JustDotExpr,
 }
 
