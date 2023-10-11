@@ -1,6 +1,28 @@
 
 # Experiment (lalrpop)
 
+## Update
+
+A smaller, more reproducible problem that highlights the issue with missing terminators is:
+
+```
+1 + 2 \ 3 + 4
+```
+
+This should be parsed as
+
+```
+1 + (2 \ (3 + 4))
+```
+
+However, this is a problem:
+
+* If `\ ` function is defined as `binary`, `\ `, `function`, then the left side will be a group, i.e. `(1 + 2) \ (3 + 4)`
+* If the same function definition uses something like `unary` instead of binary, then parsing fails, because `1+func` is impossible.
+* If the order is swapped and `+` is defined by referring to `\ `, then the closure body cannot be an addition, and so it becomes `1 + ((2 \ 3) + 4)`
+
+So the subsequent details are more complex than needed and may be out of date.
+
 ## Situation
 
 A simplified language, based on [Steel](https://github.com/mverleg/steel), where
